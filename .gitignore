@@ -12,3 +12,4 @@ go.work
 go.work.sum
 .env
 buy-and-hold
+bnh-backtest-*.db

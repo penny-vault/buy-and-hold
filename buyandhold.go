@@ -59,7 +59,7 @@ func (s *BuyAndHold) Describe() engine.StrategyDescription {
 		Source:      "",
 		Version:     "1.0.0",
 		VersionDate: time.Date(2026, 5, 2, 0, 0, 0, 0, time.UTC),
-		Schedule:    "@yearend",
+		Schedule:    "@monthend",
 		Benchmark:   "SPY",
 	}
 }
@@ -67,6 +67,12 @@ func (s *BuyAndHold) Describe() engine.StrategyDescription {
 func (s *BuyAndHold) Compute(ctx context.Context, eng *engine.Engine, _ portfolio.Portfolio, batch *portfolio.Batch) error {
 	if s.parseErr != nil {
 		return s.parseErr
+	}
+
+	// Annual rebalance: tradecron has no @yearend directive, so use @monthend
+	// and filter to December here.
+	if eng.CurrentDate().Month() != time.December {
+		return nil
 	}
 
 	members := make(map[asset.Asset]float64, len(s.parsed))
