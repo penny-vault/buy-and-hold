@@ -1,6 +1,6 @@
 module github.com/penny-vault/buy-and-hold
 
-go 1.26.1
+go 1.25.6
 
 require github.com/penny-vault/pvbt v0.8.1
 
